@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{32C3BDE6-E125-3128-82C1-25D0441455A3}</ProjectGuid>
+    <ProjectGuid>{8D1B3D4D-8A3E-A4B1-6E92-ADE36A86719F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -53,17 +53,21 @@
     <UnityVersion>2020.3.26f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
+    <Compile Include="Assets\Scripts\PlantManager.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIPlantCard.cs" />
     <Compile Include="Assets\Scripts\Plant\EnergyFlower.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\SkyEnergyManager.cs" />
     <Compile Include="Assets\Scripts\Plant\Energy.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Grid.cs" />
-    <Compile Include="Assets\Scripts\UI\UIPlantCard.cs" />
-    <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
-    <Compile Include="Assets\Scripts\PlantManager.cs" />
+    <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\Plant\Yanfei.cs" />
+    <Compile Include="Assets\Scripts\Plant\PlantBase.cs" />
+    <Compile Include="Assets\Scripts\Plant\Mona.cs" />
+    <Compile Include="Assets\Scripts\Plant\Ningguang.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

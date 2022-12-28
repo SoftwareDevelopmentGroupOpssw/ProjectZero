@@ -16,9 +16,9 @@ public class UIPlantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // 是否需要放置植物
     private bool wantPlace;
     // 用来创建的植物
-    private GameObject plant;
+    private PlantBase plant;
     // 在网格中的植物，是透明的
-    private GameObject plantInGrid;
+    private PlantBase plantInGrid;
     // 当前卡片所对应的植物类型
     public PlantType cardPlantType;
 
@@ -50,11 +50,11 @@ public class UIPlantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (wantPlace)
             {
                 // 获取预制体
-                GameObject tmpPlant = PlantManager.instance.GetPlantForType(PlantType.EnergyFlower);
-                // 开始实例化
-                plant = Instantiate(tmpPlant, Vector3.zero, Quaternion.identity, PlantManager.instance.transform);
+                GameObject tmpPlant = PlantManager.instance.GetPlantForType(cardPlantType);
+                // 开始实例化，获取PlantBase脚本组件
+                plant = Instantiate(tmpPlant, Vector3.zero, Quaternion.identity, PlantManager.instance.transform).GetComponent<PlantBase>();
                 // 不在网格中的植物，也就是拖拽的植物
-                plant.GetComponent<EnergyFlower>().InitForCreate(false);
+                plant.InitForCreate(false);
             }
             else
             {
@@ -72,35 +72,36 @@ public class UIPlantCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         // 如果需要放置植物，并且要放置的植物不能为空
         if (WantPlace && plant != null)
         {
-            // 让植物跟随我们的鼠标
+            // 让植物跟随鼠标
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //每帧获得当前鼠标最近的网格
+            Grid grid = GridManager.instance.GetGridByWorldPos(mousePoint);
             // 拖拽的植物实时跟着鼠标动
             plant.transform.position = new Vector3(mousePoint.x, mousePoint.y, 0);
             // 如果距离网格距离小于0.5，需要在网格上出现一个透明的植物
-            if (Vector2.Distance(mousePoint, GridManager.instance.GetGridPointByMouse()) < 0.5)
+            if (grid.HavePlant == false && Vector2.Distance(mousePoint, grid.Position) < 0.5)
             {
                 if (plantInGrid == null)
                 {
-                    plantInGrid = Instantiate(plant, GridManager.instance.GetGridPointByMouse(),
-                        Quaternion.identity, PlantManager.instance.transform);
+                    //由于plant是个脚本，所以需要获得这个脚本对应的游戏对象，实例化后再获得脚本
+                    plantInGrid = Instantiate(plant.gameObject, grid.Position,
+                        Quaternion.identity, PlantManager.instance.transform).GetComponent<PlantBase>();
                     // 在网格中的拟创建的虚拟植物
-                    plantInGrid.GetComponent<EnergyFlower>().InitForCreate(true);
+                    plantInGrid.InitForCreate(true);
                 }
-                // 由于已经创建，所以只需要改变它的位置到其余网格中
+                // 已经创建，只需要改变它的位置到其余网格中
                 else
                 {
-                    plantInGrid.transform.position = GridManager.instance.GetGridPointByMouse();
+                    plantInGrid.transform.position = grid.Position;
                 }
                 // 点击鼠标放置植物
                 if (Input.GetMouseButtonDown(0))
                 {
-                    // 既然已经点击，那么把拖拽中的植物，放在网格点上
-                    plant.transform.position = GridManager.instance.GetGridPointByMouse();
-                    // 实现真正的放置
-                    plant.GetComponent<EnergyFlower>().InitForPlace();
-                    // 然后将存储太阳花GameObject的plant清空，和已经放置的植物实际上没有关系了
+                    // 实现放置
+                    plant.InitForPlace(grid);
+                    // 然后将存储GameObject的plant清空，和已经放置的植物实际上没有关系了
                     plant = null;
-                    // 将网格中的虚拟植物销毁
+                    // 将网格中的虚拟植物游戏对象销毁
                     Destroy(plantInGrid.gameObject);
                     plantInGrid = null;
                     // 不需要种植了，那么状态改变销毁plant

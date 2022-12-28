@@ -19,14 +19,6 @@ public class GridManager : MonoBehaviour
         CreateGridsBaseGrid();
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            print(GetGridPointByMouse());
-        }
-    }
-
     private void CreateGridsBaseGrid()
     {
         for (int i = 0; i < 10; ++i)
@@ -40,20 +32,33 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Vector2 GetGridPointByMouse()
+    /// <summary>
+    /// 通过鼠标获取离鼠标最近的网格坐标
+    /// </summary>
+    /// <param name="worldPos"></param>
+    /// <returns></returns>
+    public Vector2 GetGridPointByMouse(Vector2 worldPos)
     {
+        return GetGridByWorldPos(worldPos).Position;
+    }
 
+    /// <summary>
+    /// 通过世界坐标获取离鼠标最近的网格
+    /// </summary>
+    /// <returns></returns>
+    public Grid GetGridByWorldPos(Vector2 worldPos)
+    {
         float dis = 999999;
-        Vector2 point = new Vector2();
+        Grid grid = null;
         for (int i = 0; i < GridList.Count; ++i)
         {
-            float mouseToGrid = Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), GridList[i].Position);
+            float mouseToGrid = Vector2.Distance(worldPos, GridList[i].Position);
             if (mouseToGrid < dis)
             {
                 dis = mouseToGrid;
-                point = GridList[i].Position;
+                grid = GridList[i];
             }
         }
-        return point;
+        return grid;
     }
 }

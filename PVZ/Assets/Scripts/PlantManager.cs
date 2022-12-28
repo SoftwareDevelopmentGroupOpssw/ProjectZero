@@ -4,7 +4,14 @@ using UnityEngine;
 
 public enum PlantType
 {
-    EnergyFlower
+    //³äµç±¦
+    EnergyFlower,
+    //ÑÌç³
+    Yanfei,
+    //ÄªÄÈ
+    Mona,
+    //Äý¹â
+    Ningguang,
 }
 public class PlantManager : MonoBehaviour
 {
@@ -20,6 +27,12 @@ public class PlantManager : MonoBehaviour
         {
             case PlantType.EnergyFlower:
                 return GameManager.instance.GameConfig.EnergyFlower;
+            case PlantType.Yanfei:
+                return GameManager.instance.GameConfig.Yanfei;
+            case PlantType.Mona:
+                return GameManager.instance.GameConfig.Mona;
+            case PlantType.Ningguang:
+                return GameManager.instance.GameConfig.Ningguang;
             default:
                 break;
         }

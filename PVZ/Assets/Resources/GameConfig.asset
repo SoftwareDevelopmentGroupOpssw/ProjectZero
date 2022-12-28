@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Energy: {fileID: 7663652277716901154, guid: 8418de78539b20045878914d275992cf, type: 3}
   EnergyFlower: {fileID: 2022446095369464650, guid: 2002d2930b82e2748a98bf7a2d343fd8, type: 3}
+  Yanfei: {fileID: 8952775705193802602, guid: a5260781f09521a4aaee69b1ae425758, type: 3}
+  Mona: {fileID: 8185591064991622900, guid: fa02438b487d2ec42b1a92ec94cb4a32, type: 3}
+  Ningguang: {fileID: 7378316179678276864, guid: 741decbce9dbdc74ca5021ead49354a5, type: 3}

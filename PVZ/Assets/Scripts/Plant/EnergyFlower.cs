@@ -2,46 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyFlower : MonoBehaviour
+public class EnergyFlower : PlantBase
 {
-
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-
-    }
-    private void Find()
-    {
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-    public void InitForCreate(bool inGrid)
-    {
-
-        // 获取组件
-        Find();
-        // 拖拽时不播放动画
-        animator.speed = 0;
-        if (inGrid)
-        {
-            spriteRenderer.sortingOrder = -1;
-            spriteRenderer.color = new Color(1, 1, 1, 0.6f);
-        }
-    }
-    public void InitForPlace()
-    {
-        // 恢复动画
-        animator.speed = 1;
-        spriteRenderer.sortingOrder = 0;
-        InvokeRepeating("CreateEnergy", 3, 3);
-    }
-    // Update is called once per frame
 
     private void CreateEnergy()
     {
@@ -49,5 +11,13 @@ public class EnergyFlower : MonoBehaviour
             transform).GetComponent<Energy>();
         //能量跳跃动画
         energy.JumpAnimation();
+    }
+
+    /// <summary>
+    /// 能量花function,每隔3s生成1个能量
+    /// </summary>
+    protected override void FunForPlace()
+    {
+        InvokeRepeating("CreateEnergy", 3, 3);
     }
 }

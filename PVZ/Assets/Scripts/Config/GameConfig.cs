@@ -10,4 +10,10 @@ public class GameConfig : ScriptableObject
     public GameObject Energy;
     [Tooltip("³äµç±¦")]
     public GameObject EnergyFlower;
+    [Tooltip("ÑÌç³")]
+    public GameObject Yanfei;
+    [Tooltip("ÄªÄÈ")]
+    public GameObject Mona;
+    [Tooltip("Äý¹â")]
+    public GameObject Ningguang;
 }
